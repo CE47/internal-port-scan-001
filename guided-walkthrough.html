@@ -353,12 +353,6 @@ td code{font-family:var(--font-mono); font-size:12.2px; color:var(--accent-2)}
   background:var(--surface-2); font-size:13.4px;
 }
 .score .sub{color:var(--faint); font-size:12.4px; margin-top:4px; display:block}
-details.key{border:1px solid var(--line); border-radius:var(--r-md); padding:12px 15px; margin:22px 0 4px;
-  background:var(--surface-2)}
-details.key > summary{cursor:pointer; font:700 11px/1 var(--font-sans); letter-spacing:.13em;
-  text-transform:uppercase; color:var(--warn); list-style:none}
-details.key > summary::-webkit-details-marker{display:none}
-details.key[open] > summary{margin-bottom:12px}
 
 /* ===========================================================================
    5. LESSON FOOTER NAV
@@ -1549,52 +1543,7 @@ function renderReport(){
   score.style.display = state.checked ? "block" : "none";
   frag.appendChild(score);
 
-  frag.appendChild(keyBlock());
   return frag;
-}
-
-const KEY_ROWS = [
-  ["Q1 · Evidence files", "5"],
-  ["Q2 · Attacking sources", "10.0.4.11, 10.0.4.12"],
-  ["Q3 · REFUSED from .11", "90"],
-  ["Q4 · REFUSED from .12", "30"],
-  ["Q5 · Hosts scanned by .11", "10.0.4.12, 10.0.4.13, 10.0.4.20, 10.0.4.21, 10.0.4.22"],
-  ["Q6 · Open service ports", "445 (SMB), 1433 (MSSQL), 3389 (RDP), 5985 (WinRM)"],
-  ["Q7 · Compromised account", "kpatel"],
-  ["Q8 · Foothold", "sec-win-03 (10.0.4.11)"],
-  ["Q9 · Lateral target", "sec-win-04 (10.0.4.12)"],
-  ["Q10 · Failed logons from .11", "5"],
-  ["Q11 · Scanner", "nmap (nmap.exe)"],
-  ["Q12 · Post-exploit processes", "2 (cmd.exe, powershell.exe)"],
-  ["Q13 · Owner of 10.0.4.20", "sec-srv-dc01 — the domain controller"],
-  ["Q14 · nmap command line", "nmap.exe -sS -p1-1024 -T4 10.0.4.12-22"],
-  ["Q15 · Intrusion window", "14:02:00 → 14:42:00 (40 minutes)"],
-  ["Q16 · Noisiest benign account/source pair", "svc_backup from 10.0.4.21 (8 failures). " +
-   "Per account overall the leader is jdoe with 23 spread over many hosts — hence the " +
-   "wording \"from a single source address\"."],
-  ["Decoys in the data", "benign 4625s from jdoe / asmith / mchen / rneuman / svega · small REFUSED " +
-   "counts from 10.0.4.14 / .16 / .19 · every RESET event from benign hosts · routine DNS and DHCP traffic"]
-];
-
-function keyBlock(){
-  const d = el("details", "key");
-  d.appendChild(el("summary", null, "Instructor · answer key"));
-  d.appendChild(el("p", null,
-    "For the trainer only. The self-check uses the same values, so a perfect score is expected " +
-    "once the evidence has been read."));
-  const wrap = el("div", "tbl-wrap");
-  const t = el("table");
-  t.innerHTML = '<thead><tr><th style="width:38%">Fact</th><th>Ground truth</th></tr></thead>';
-  const tb = el("tbody");
-  KEY_ROWS.forEach(r => {
-    const tr = el("tr");
-    tr.innerHTML = "<td>" + esc(r[0]) + "</td><td><code>" + esc(r[1]) + "</code></td>";
-    tb.appendChild(tr);
-  });
-  t.appendChild(tb);
-  wrap.appendChild(t);
-  d.appendChild(wrap);
-  return d;
 }
 
 function renderStep(){
